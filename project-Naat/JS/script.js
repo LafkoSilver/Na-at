@@ -34,3 +34,52 @@ document.querySelectorAll('a[href^="#"]').forEach(enlace => {
     }
   });
 });
+
+// form-validation.js
+export function validateForm() {
+  // Código de validación
+}
+
+// main.js
+import { validateForm } from './form-validation.js';
+
+try {
+  // Código que podría fallar
+} catch (error) {
+  console.error('Error en la operación:', error);
+  // Mostrar mensaje amigable al usuario
+}
+document.getElementById('searchInput').addEventListener('input', function() {
+  const searchTerm = this.value.toLowerCase();
+  const articles = document.querySelectorAll('.article-card');
+  
+  articles.forEach(article => {
+    const title = article.querySelector('.card-title').textContent.toLowerCase();
+    const content = article.querySelector('.card-text').textContent.toLowerCase();
+    
+    if (title.includes(searchTerm) || content.includes(searchTerm)) {
+      article.style.display = '';
+    } else {
+      article.style.display = 'none';
+    }
+  });
+});
+
+document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const formData = {
+    nombre: document.getElementById('nombre').value,
+    correo: document.getElementById('correo').value,
+    mensaje: document.getElementById('mensaje').value,
+    fecha: new Date().toISOString()
+  };
+  
+  // Guardar en localStorage
+  const mensajes = JSON.parse(localStorage.getItem('mensajes') || '[]');
+  mensajes.push(formData);
+  localStorage.setItem('mensajes', JSON.stringify(mensajes));
+  
+  alert('Mensaje enviado con éxito. ¡Gracias por contactarnos!');
+  this.reset();
+});
