@@ -1,0 +1,1 @@
+import { validateForm } from './form-validation.js';
